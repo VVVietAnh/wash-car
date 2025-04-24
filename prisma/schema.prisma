@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  phone     String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  bookings  Booking[]
+  @@map("users")
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  duration    Int       // Duration in minutes
+  createdAt   DateTime  @default(now()) @map("created_at")
+  bookings    Booking[]
+  @@map("services")
+}
+
+model Booking {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  serviceId   String    @map("service_id")
+  bookingDate DateTime  @map("booking_date")
+  timeSlot    String    @map("time_slot")
+  status      String    @default("PENDING") // PENDING, CONFIRMED, CANCELLED, COMPLETED
+  createdAt   DateTime  @default(now()) @map("created_at")
+  user        User      @relation(fields: [userId], references: [id])
+  service     Service   @relation(fields: [serviceId], references: [id])
+  @@map("bookings")
+}
+
+model TimeSlot {
+  id           String    @id @default(cuid())
+  startTime    String    @map("start_time")
+  endTime      String    @map("end_time")
+  maxCapacity  Int       @default(1) @map("max_capacity")
+  isAvailable  Boolean   @default(true) @map("is_available")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  @@map("time_slots")
+}
