@@ -51,7 +51,6 @@ export default function Home() {
                 Rửa ngoài, hút bụi nội thất, lau kính và làm sạch lốp
               </p>
               <p className="mt-4 text-2xl font-bold text-gray-900">150.000đ</p>
-              <Button className="mt-6 w-full">Đặt lịch</Button>
             </div>
           </div>
 
@@ -63,7 +62,6 @@ export default function Home() {
                 Rửa ngoài, hút bụi nội thất, lau kính, làm sạch lốp và đánh bóng
               </p>
               <p className="mt-4 text-2xl font-bold text-gray-900">250.000đ</p>
-              <Button className="mt-6 w-full">Đặt lịch</Button>
             </div>
           </div>
 
@@ -75,7 +73,6 @@ export default function Home() {
                 Rửa ngoài, hút bụi nội thất, lau kính, làm sạch lốp, đánh bóng và phủ ceramic
               </p>
               <p className="mt-4 text-2xl font-bold text-gray-900">500.000đ</p>
-              <Button className="mt-6 w-full">Đặt lịch</Button>
             </div>
           </div>
         </div>
