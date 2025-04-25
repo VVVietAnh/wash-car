@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select'
 import { format } from 'date-fns'
 import { vi } from 'date-fns/locale'
+import { Toaster, toast } from 'sonner'
 
 const services = [
   { id: 'cm9w4sg4h0002onw9vf3x8ogw', name: 'Rửa xe cơ bản', price: 100000 },
@@ -28,23 +29,17 @@ export default function BookingPage() {
   const [date, setDate] = useState<Date>()
   const [timeSlot, setTimeSlot] = useState<string>()
   const [serviceId, setServiceId] = useState<string>()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async () => {
     if (!date || !timeSlot || !serviceId) {
-      console.log('Vui lòng chọn đầy đủ thông tin')
+      toast.error('Vui lòng chọn đầy đủ thông tin')
       return
     }
 
     const selectedService = services.find(s => s.id === serviceId)
 
-    // Log thông tin đặt lịch
-    console.log('=== THÔNG TIN ĐẶT LỊCH ===')
-    console.log('Ngày:', format(date, 'dd/MM/yyyy', { locale: vi }))
-    console.log('Giờ:', timeSlot)
-    console.log('Dịch vụ:', selectedService?.name)
-    console.log('Giá:', selectedService?.price.toLocaleString('vi-VN'), 'đ')
-    console.log('========================')
-
+    setIsSubmitting(true)
     try {
       const response = await fetch('/api/bookings', {
         method: 'POST',
@@ -59,18 +54,42 @@ export default function BookingPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Đặt lịch thất bại')
+        const error = await response.json()
+        throw new Error(error.error || 'Đặt lịch thất bại')
       }
 
       const booking = await response.json()
-      console.log('Đặt lịch thành công:', booking)
+      
+      // Hiển thị thông báo thành công
+      toast.success(
+        <div className="space-y-2">
+          <h3 className="font-semibold">Đặt lịch thành công!</h3>
+          <p>Dịch vụ: {selectedService?.name}</p>
+          <p>Ngày: {format(date, 'dd/MM/yyyy', { locale: vi })}</p>
+          <p>Giờ: {timeSlot}</p>
+          <p>Giá: {selectedService?.price.toLocaleString('vi-VN')}đ</p>
+        </div>
+      )
+
+      // Reset form
+      setDate(undefined)
+      setTimeSlot(undefined)
+      setServiceId(undefined)
     } catch (error) {
-      console.error('Lỗi khi đặt lịch:', error)
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Có lỗi xảy ra, vui lòng thử lại')
+      }
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
     <div className="container mx-auto p-4 max-w-md">
+      <Toaster position="top-center" expand={true} richColors />
+      
       <h1 className="text-3xl font-bold text-center mb-8">Đặt lịch rửa xe</h1>
       <p className="text-gray-600 text-center mb-8">
         Chọn ngày, giờ và dịch vụ phù hợp với nhu cầu của bạn
@@ -122,9 +141,9 @@ export default function BookingPage() {
         <Button 
           className="w-full" 
           onClick={handleSubmit}
-          disabled={!date || !timeSlot || !serviceId}
+          disabled={!date || !timeSlot || !serviceId || isSubmitting}
         >
-          Đặt lịch
+          {isSubmitting ? 'Đang xử lý...' : 'Đặt lịch'}
         </Button>
       </div>
     </div>
