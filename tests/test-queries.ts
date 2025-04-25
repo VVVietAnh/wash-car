@@ -1,6 +1,6 @@
-import { PrismaClient } from '../generated/prisma'
+import { PrismaClient } from '@prisma/client'
 
-async function main() {
+async function testQueries() {
   try {
     console.log('Creating PrismaClient...')
     const prisma = new PrismaClient({
@@ -75,7 +75,7 @@ async function main() {
         service: true
       }
     })
-    const totalRevenue = confirmedBookings.reduce((sum, booking) => sum + booking.service.price, 0)
+    const totalRevenue = confirmedBookings.reduce((sum: number, booking: any) => sum + booking.service.price, 0)
     console.log('Total revenue:', totalRevenue.toLocaleString('vi-VN'), 'VND')
 
     await prisma.$disconnect()
@@ -85,4 +85,4 @@ async function main() {
   }
 }
 
-main() 
+testQueries() 
