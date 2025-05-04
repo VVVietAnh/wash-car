@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --no-lint",
+    "build": "prisma generate && next build --no-lint",
     "start": "next start",
     "lint": "next lint",
     "test-prisma": "npx ts-node src/scripts/test-prisma.ts",
     "test-services": "npx ts-node src/scripts/test-services.ts",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
