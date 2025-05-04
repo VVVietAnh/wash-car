@@ -8,6 +8,17 @@ export async function POST(request: Request) {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)
 
+  // // TẠM TẮT XÁC THỰC: Gán user giả lập
+  // const user = {
+  //   id: 'test-user-id',
+  //   email: 'testuser@example.com',
+  //   user_metadata: {
+  //     full_name: 'Test User',
+  //     phone: '0123456789'
+  //   }
+  // }
+  // Bỏ qua mọi kiểm tra xác thực khác
+
   try {
     const { data: { user }, error: authError } = await supabase.auth.getUser()
 
@@ -33,6 +44,7 @@ export async function POST(request: Request) {
       })
 
       if (!service) {
+        console.error('Service not found:', serviceId)
         return NextResponse.json(
           { error: 'Service not found' },
           { status: 404 }
@@ -40,8 +52,13 @@ export async function POST(request: Request) {
       }
 
       // Tìm hoặc tạo user trong database
-      let dbUser = await prisma.user.findUnique({
-        where: { id: user.id }
+      let dbUser = await prisma.user.findFirst({
+        where: {
+          OR: [
+            { id: user.id },
+            { email: user.email }
+          ]
+        }
       })
 
       if (!dbUser) {
@@ -92,11 +109,20 @@ export async function POST(request: Request) {
       throw error
     }
   } catch (error) {
-    console.error('Error creating booking:', error)
+    // In chi tiết lỗi và stack trace
+    console.error('Error creating booking:', error);
+    if (error instanceof Error) {
+      console.error('Stack trace:', error.stack);
+    }
+
+    // Trả về lỗi chi tiết hơn khi ở môi trường dev
+    const isDev = process.env.NODE_ENV !== 'production';
     return NextResponse.json(
-      { error: 'Internal server error' },
+      isDev
+        ? { error: error instanceof Error ? error.message : String(error), stack: error instanceof Error ? error.stack : undefined }
+        : { error: 'Internal server error' },
       { status: 500 }
-    )
+    );
   }
 }
 
