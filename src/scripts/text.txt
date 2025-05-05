@@ -1,1 +1,2 @@
 curl http://localhost:3000/api/test-bookings | jq
+https://wash-pogdvknvb-vietanhs-projects-20ea1977.vercel.app/

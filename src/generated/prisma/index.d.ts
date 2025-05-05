@@ -1218,6 +1218,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     phone: string | null
+    role: string | null
     createdAt: Date | null
   }
 
@@ -1226,6 +1227,7 @@ export namespace Prisma {
     email: string | null
     name: string | null
     phone: string | null
+    role: string | null
     createdAt: Date | null
   }
 
@@ -1234,6 +1236,7 @@ export namespace Prisma {
     email: number
     name: number
     phone: number
+    role: number
     createdAt: number
     _all: number
   }
@@ -1244,6 +1247,7 @@ export namespace Prisma {
     email?: true
     name?: true
     phone?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1252,6 +1256,7 @@ export namespace Prisma {
     email?: true
     name?: true
     phone?: true
+    role?: true
     createdAt?: true
   }
 
@@ -1260,6 +1265,7 @@ export namespace Prisma {
     email?: true
     name?: true
     phone?: true
+    role?: true
     createdAt?: true
     _all?: true
   }
@@ -1341,6 +1347,7 @@ export namespace Prisma {
     email: string
     name: string | null
     phone: string | null
+    role: string
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1366,6 +1373,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     phone?: boolean
+    role?: boolean
     createdAt?: boolean
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1376,6 +1384,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     phone?: boolean
+    role?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1384,6 +1393,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     phone?: boolean
+    role?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -1392,10 +1402,11 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     phone?: boolean
+    role?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "phone" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "phone" | "role" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bookings?: boolean | User$bookingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1413,6 +1424,7 @@ export namespace Prisma {
       email: string
       name: string | null
       phone: string | null
+      role: string
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1842,6 +1854,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly phone: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -5547,6 +5560,7 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     phone: 'phone',
+    role: 'role',
     createdAt: 'createdAt'
   };
 
@@ -5693,6 +5707,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
+    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     bookings?: BookingListRelationFilter
   }
@@ -5702,6 +5717,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     bookings?: BookingOrderByRelationAggregateInput
   }
@@ -5714,6 +5730,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     phone?: StringNullableFilter<"User"> | string | null
+    role?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     bookings?: BookingListRelationFilter
   }, "id" | "email">
@@ -5723,6 +5740,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -5737,6 +5755,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -5934,6 +5953,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     phone?: string | null
+    role?: string
     createdAt?: Date | string
     bookings?: BookingCreateNestedManyWithoutUserInput
   }
@@ -5943,6 +5963,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     phone?: string | null
+    role?: string
     createdAt?: Date | string
     bookings?: BookingUncheckedCreateNestedManyWithoutUserInput
   }
@@ -5952,6 +5973,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUpdateManyWithoutUserNestedInput
   }
@@ -5961,6 +5983,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bookings?: BookingUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -5970,6 +5993,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     phone?: string | null
+    role?: string
     createdAt?: Date | string
   }
 
@@ -5978,6 +6002,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -5986,6 +6011,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6248,6 +6274,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6256,6 +6283,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6264,6 +6292,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     phone?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6911,6 +6940,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     phone?: string | null
+    role?: string
     createdAt?: Date | string
   }
 
@@ -6919,6 +6949,7 @@ export namespace Prisma {
     email: string
     name?: string | null
     phone?: string | null
+    role?: string
     createdAt?: Date | string
   }
 
@@ -6966,6 +6997,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -6974,6 +7006,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

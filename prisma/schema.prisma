@@ -19,6 +19,7 @@ model User {
   email     String    @unique
   name      String?
   phone     String?
+  role      String    @default("USER") // USER or ADMIN
   createdAt DateTime  @default(now()) @map("created_at")
   bookings  Booking[]
   @@map("users")

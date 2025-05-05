@@ -3,10 +3,12 @@ import prisma from '../../../lib/prisma'
 import { createClient } from '../../../lib/supabase/server'
 import { cookies } from 'next/headers'
 import { Prisma } from '../../../generated/prisma'
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 
 export async function POST(request: Request) {
   const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createRouteHandlerClient({ cookies })
+  const { data: { session } } = await supabase.auth.getSession()
 
   // // TẠM TẮT XÁC THỰC: Gán user giả lập
   // const user = {
@@ -128,7 +130,8 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   const cookieStore = await cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createRouteHandlerClient({ cookies })
+  const { data: { session } } = await supabase.auth.getSession()
 
   try {
     const { data: { user }, error: authError } = await supabase.auth.getUser()
